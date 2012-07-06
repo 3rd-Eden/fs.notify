@@ -18,5 +18,9 @@
   "license": "MIT",
   "main": "notify.js",
   "name": "fs.notify",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:3rd-Eden/fs.notify.git"
+  },
   "version": "0.0.0"
 }
