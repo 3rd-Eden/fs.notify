@@ -2,7 +2,8 @@
   "author": "Arnout Kazemier",
   "description": "file change notification that doesn't suck hairy monkey balls and just works.",
   "dependencies": {
-    "async": "~0.1.22"
+    "async": "~0.1.22",
+    "retry": "~0.6.0"
   },
   "keywords": [
     "watch",
