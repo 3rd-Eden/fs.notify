@@ -1,0 +1,21 @@
+{
+  "author": "Arnout Kazemier",
+  "description": "file change notification that doesn't suck hairy monkey balls and just works.",
+  "dependencies": {
+    "async": "~0.1.22"
+  },
+  "keywords": [
+    "watch",
+    "notify",
+    "fs",
+    "notification",
+    "watching",
+    "watcher",
+    "fs.watch",
+    "FSWatcher"
+  ],
+  "license": "MIT",
+  "main": "notify.js",
+  "name": "fs.notify",
+  "version": "0.0.0"
+}
