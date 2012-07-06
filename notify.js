@@ -128,7 +128,7 @@ Notify.prototype.manually = function manually(FSWatcher) {
 
         // check if the modification time has changed
         if (current.mtime !== stat.mtime) {
-          self.emit('change', file, stat);
+          self.emit('change', file);
         }
       });
     });
@@ -198,8 +198,8 @@ Notify.prototype.ensure = function ensure(path, fn) {
     fs.exists(path, function existance(exists) {
       // we are using .exists, and that doens't return an error just a boolean,
       // so we need to create a fake error object for your retry operation
-      var fakeerr = exists ? undefined : new Error();
-      if (operation.retry(fakeerr)) return;
+      var fakeErr = exists ? undefined : new Error();
+      if (operation.retry(fakeErr)) return;
 
       fn(exists);
     });
@@ -218,7 +218,7 @@ Notify.prototype.ensure = function ensure(path, fn) {
  */
 
 Notify.prototype.change = function change(FSWatcher, event, filename) {
-  if (!filename || true) return this.manually(FSWatcher).reset(FSWatcher.path);
+  if (!filename) return this.manually(FSWatcher).reset(FSWatcher.path);
 
   this.emit('change', filename);
   this.reset(FSWatcher.path);
