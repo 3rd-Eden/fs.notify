@@ -1,6 +1,6 @@
 # fs.notify
 
-Node.js file change notifications that does suck hairy monkey balls.
+Node.js file change notification that doesn't suck hairy monkey balls.
 
 ```js
 var Notify = require('fs.notify');
