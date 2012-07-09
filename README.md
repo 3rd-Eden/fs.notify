@@ -27,6 +27,9 @@ notifications.on('change', function (file) {
   console.log('file changed');
 });
 
+// if you want to add more files you can use the
+notifications.add([path, morepaths]);
+
 // kill everything
 notifications.close();
 ```
