@@ -1,3 +1,6 @@
+## 0.0.3
+  - Compare time based on their numeric value, a regular compare.
+
 ## 0.0.2
   - Prevent duplicate listeners from being added by expanding paths
   - Remove all listeners when we are closing to prevent duplicate events

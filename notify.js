@@ -137,7 +137,7 @@ Notify.prototype.manually = function manually(FSWatcher, event) {
         if (!stat || err) return;
 
         // check if the modification time has changed
-        if (current.mtime !== stat.mtime) {
+        if (+current.mtime !== +stat.mtime) {
           self.emit('change', file, event);
         }
       });
