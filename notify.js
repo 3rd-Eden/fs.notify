@@ -3,6 +3,7 @@
 var EventEmitter = require('events').EventEmitter
   , async = require('async')
   , retry = require('retry')
+  , pathy = require('path')
   , fs = require('fs');
 
 /**
@@ -59,6 +60,7 @@ Notify.prototype.close = function close() {
   // close all FSWatches
   for (watcher in this.FSWatchers) {
     FSWatcher = this.FSWatchers[watcher];
+    FSWatcher.removeAllListeners();
 
     if ('close' in FSWatcher) FSWatcher.close();
   }
@@ -82,6 +84,13 @@ Notify.prototype.watch = function watch(path) {
   var self = this
     , FSWatcher;
 
+  // resolve the path this allows us to prevent duplicates of ./index.js and
+  // index.js
+  path = pathy.resolve(path);
+
+  // check for duplicates
+  if (this.FSWatchers[path]) return this;
+
   // update the fs stat
   fs.stat(path, function stats(err, stat) {
     if (stat) self.FStats[path] = stat;
@@ -104,10 +113,11 @@ Notify.prototype.watch = function watch(path) {
  * Manually search for file changes.
  *
  * @param {FSWatcher} FSWatcher
+ * @param {String} event the name of the event
  * @api public
  */
 
-Notify.prototype.manually = function manually(FSWatcher) {
+Notify.prototype.manually = function manually(FSWatcher, event) {
   var self = this
     , files = FSWatcher && FSWatcher.path
         ? [FSWatcher.path]
@@ -128,7 +138,7 @@ Notify.prototype.manually = function manually(FSWatcher) {
 
         // check if the modification time has changed
         if (current.mtime !== stat.mtime) {
-          self.emit('change', file);
+          self.emit('change', file, event);
         }
       });
     });
@@ -148,7 +158,10 @@ Notify.prototype.reset = function reset(path) {
     , FSWatcher = this.FSWatchers[path];
 
   // close it
-  if (FSWatcher) FSWatcher.close();
+  if (FSWatcher) {
+    FSWatcher.close();
+    FSWatcher.removeAllListeners();
+  }
 
   // clear it from our queue
   delete this.FSWatchers[path];
@@ -218,9 +231,9 @@ Notify.prototype.ensure = function ensure(path, fn) {
  */
 
 Notify.prototype.change = function change(FSWatcher, event, filename) {
-  if (!filename) return this.manually(FSWatcher).reset(FSWatcher.path);
+  if (!filename) return this.manually(FSWatcher, event).reset(FSWatcher.path);
 
-  this.emit('change', filename);
+  this.emit('change', filename, event);
   this.reset(FSWatcher.path);
 
   return this;
