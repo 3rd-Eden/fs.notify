@@ -23,8 +23,8 @@ var files = [
 ];
 
 var notifications = new Notify(files);
-notifications.on('change', function (file) {
-  console.log('file changed');
+notifications.on('change', function (file, event, path) {
+  console.log('caught a ' + event + ' event on ' + path);
 });
 
 // if you want to add more files you can use the
