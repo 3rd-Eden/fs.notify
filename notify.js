@@ -233,7 +233,7 @@ Notify.prototype.ensure = function ensure(path, fn) {
 Notify.prototype.change = function change(FSWatcher, event, filename) {
   if (!filename) return this.manually(FSWatcher, event).reset(FSWatcher.path);
 
-  this.emit('change', filename, event);
+  this.emit('change', filename, event, FSWatcher.path);
   this.reset(FSWatcher.path);
 
   return this;

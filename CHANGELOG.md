@@ -1,3 +1,6 @@
+## 0.0.4
+  - Add full path argument to those passed to notification callback.
+
 ## 0.0.3
   - Compare time based on their numeric value, a regular compare.
 
